@@ -115,15 +115,15 @@ class DriverLicenseUpdateView(LoginRequiredMixin, generic.UpdateView):
     success_url = reverse_lazy("taxi:driver-list")
 
 
-@login_required
-def assign_to_car(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    car.drivers.add(request.user)
-    return redirect("taxi:car-detail", pk=pk)
+class AssignToCarView(LoginRequiredMixin, generic.UpdateView):
+    def post(self, request, pk):
+        car = get_object_or_404(Car, pk=pk)
+        car.drivers.add(request.user)
+        return redirect("taxi:car-detail", pk=pk)
 
 
-@login_required
-def remove_from_car(request, pk):
-    car = get_object_or_404(Car, pk=pk)
-    car.drivers.remove(request.user)
-    return redirect("taxi:car-detail", pk=pk)
+class RemoveFromCarView(LoginRequiredMixin, generic.UpdateView):
+    def post(self, request, pk):
+        car = get_object_or_404(Car, pk=pk)
+        car.drivers.remove(request.user)
+        return redirect("taxi:car-detail", pk=pk)

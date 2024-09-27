@@ -24,10 +24,17 @@
   
   <div class="mt-4">
     {% if user in car.drivers.all %}
-      <a href="{% url 'taxi:car-remove' car.pk %}" class="btn btn-danger">Delete me from this car</a>
+      <form method="post" action="{% url 'taxi:car-remove' car.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete me from this car</button>
+      </form>
     {% else %}
-      <a href="{% url 'taxi:car-assign' car.pk %}" class="btn btn-success">Assign me to this car</a>
+      <form method="post" action="{% url 'taxi:car-assign' car.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Assign me to this car</button>
+      </form>
     {% endif %}
   </div>
   
 {% endblock %}
+
